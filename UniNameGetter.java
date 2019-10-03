@@ -10,8 +10,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class UniNameGetter {
     //method for extracting the name from 
@@ -56,7 +54,6 @@ public class UniNameGetter {
             BufferedReader urlReader = new BufferedReader(new InputStreamReader(webpageURL.openStream()));
 
             System.out.println(getName(urlReader));
-            urlReader.close();
 
         } catch (Exception e){
             //print the trace of the error
