@@ -56,6 +56,7 @@ public class UniNameGetter {
             BufferedReader urlReader = new BufferedReader(new InputStreamReader(webpageURL.openStream()));
 
             System.out.println(getName(urlReader));
+            urlReader.close();
 
         } catch (Exception e){
             //print the trace of the error
