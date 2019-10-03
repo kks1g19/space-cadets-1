@@ -2,13 +2,14 @@
     * UniNameGetter - class for getting university name 
     * from the university id
     * @author KKS 
-    * @version 1.0.0
+    * @version 1.0.0e
 */
 
-//import the required JAVA libs to get user input
+//import the necessary classes
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,10 +25,13 @@ public class UniNameGetter {
             while ((line = htmlResponse.readLine()) != null){
                 //if line contains the name
                 if(line.contains("property=\"name\"")){
-                    //find the beggining of name and its end
-                    int from = line.indexOf("property=\"name\">") + "property=\"name\">".length();
-                    int to = line.lastIndexOf("<em");
-                    return line.substring(from, to);
+                    //find the regexp
+                    Pattern p = Pattern.compile("^.*property=\"name\">(.*)<em.*$");
+                    Matcher matchedLine = p.matcher(line);
+                    while(matchedLine.find()){
+                        //exctract the first matched group
+                        return matchedLine.group(1);
+                    }
                 }
             }    
         } catch (Exception e){
@@ -39,12 +43,12 @@ public class UniNameGetter {
 
     public static void main(String[] args) {
         //convert the inputstream System.in reader to a bufferedreader
-        BufferedReader scanner = new BufferedReader(new InputStreamReader(System.in));
+        Scanner scanner = new Scanner(System.in);
         System.out.print("ID: ");
         //try to capture the input
         try {
-            String id = scanner.readLine(); 
-            //close the scanner bufferedreader
+            String id = scanner.nextLine(); 
+            //close the scanner 
             scanner.close();
 
             String address = "https://www.ecs.soton.ac.uk/people/" + id;
@@ -56,6 +60,8 @@ public class UniNameGetter {
             BufferedReader urlReader = new BufferedReader(new InputStreamReader(webpageURL.openStream()));
 
             System.out.println(getName(urlReader));
+
+            urlReader.close();
 
         } catch (Exception e){
             //print the trace of the error
