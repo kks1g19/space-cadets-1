@@ -5,7 +5,7 @@
     * @version 1.0.0
 */
 
-//import the scanner class to get user input
+//import the required JAVA libs to get user input
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -24,9 +24,7 @@ public class UniNameGetter {
             while ((line = htmlResponse.readLine()) != null){
                 //if line contains the name
                 if(line.contains("property=\"name\"")){
-                    //find the regexp
-                    //Pattern p = Pattern.compile("^.*property=\"name\">(.*)<em.*$");
-                    //Matcher matchedLine = p.matcher(line);
+                    //find the beggining of name and its end
                     int from = line.indexOf("property=\"name\">") + "property=\"name\">".length();
                     int to = line.lastIndexOf("<em");
                     return line.substring(from, to);
